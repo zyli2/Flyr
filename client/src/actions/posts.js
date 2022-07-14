@@ -23,3 +23,14 @@ export const getPosts = () => async (dispatch) => {
         console.log(error.message);
     }
 } 
+
+export const createPost = (post) => async (dispatch) => {
+    try {
+        // get the data from doing an api request of a post from our backend
+        const { data } = await api.createPost(post);
+
+        dispatch({ type: 'CREATE', payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
