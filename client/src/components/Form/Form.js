@@ -1,24 +1,40 @@
 // this is the code for creating a "memory"/form on the website
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, updatePost } from '../../actions/posts';
 
-const Form = () => {
+// on individual posts, we need to get the current id
+// becuase when we press the "..." spread icon is the edit button
+// we need to pass over the id of that post to our form component
+// that way we can go from "Creating a memory" to "Editing a memory"
+// for the selected post that is identified by its id.
+const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
         // creator/wtv: '' means it's an empty string
         creator: '', title: '', message: '', tags: '', selectedFile: ''});
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id == currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    // we run this function when the post gets updated from nothing to a post
+    useEffect(() => {
+        if (post) setPostData(post);
+    }, [post])
 
 // once the user press submit, we want to send a post request with all the user's data
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(createPost(postData));
+        if (currentId) {
+            // remember that to do so, we need an id so currentId is the first paramter
+            dispatch(updatePost(currentId, postData));
+        } else {
+            dispatch(createPost(postData));
+        }
     }
 
     const clear = () => {

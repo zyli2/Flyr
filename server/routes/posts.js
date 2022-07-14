@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getPosts,createPost } from '../controllers/posts.js';
+import { getPosts,createPost, updatePost } from '../controllers/posts.js';
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ const router = express.Router();
 // getPosts is the way we make code easier to manage. Refer to controllers/posts.js
 router.get('/', getPosts);
 router.post('/', createPost);
+router.patch('/:id', updatePost);
 
 
 export default router;

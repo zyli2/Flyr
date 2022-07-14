@@ -3,6 +3,7 @@
 // This is done so that the code of functions in posts.js
 // can be written here and exported to posts.js
 
+import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
 // 'export' makes it so we can use this in /routes
@@ -33,4 +34,16 @@ export const createPost = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+}
+
+export const updatePost = async (req, res) => {
+    const { id: _id } = req.params;
+    const post = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    // post the updated post and the updated post is received from post = req.body from the frontend
+    const updatePost = await PostMessage.findByIdAndUpdate(_id, post, { new: true });
+
+    res.json(updatePost);
 }
