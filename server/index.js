@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 const app = express();
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(cors());
 
 // every route inside postRoutes will start with posts -- refer to posts.js
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 // credentials will be secured later
 const PORT = process.env.PORT || 5000;

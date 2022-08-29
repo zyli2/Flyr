@@ -1,6 +1,8 @@
 import express from 'express';
 
-import { getPosts,createPost, updatePost, deletePost, likePost } from '../controllers/posts.js';
+import { getPosts, createPost, updatePost, deletePost, likePost } from '../controllers/posts.js';
+
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -12,10 +14,11 @@ const router = express.Router();
 // a callback function for users requesting 5000 and our response
 // getPosts is the way we make code easier to manage. Refer to controllers/posts.js
 router.get('/', getPosts);
-router.post('/', createPost);
-router.patch('/:id', updatePost);
-router.delete('/:id', deletePost);
-router.patch('/:id/likePost', likePost);
+router.post('/', auth, createPost);
+router.patch('/:id', auth, updatePost);
+router.delete('/:id', auth, deletePost);
+router.patch('/:id/likePost', auth, likePost);
 
+// auth is what checks if the user can do certain actions
 
 export default router;
