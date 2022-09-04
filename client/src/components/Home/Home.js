@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Grow, Grid, Paper } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts';
-import { useNavigate, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
