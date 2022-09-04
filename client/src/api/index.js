@@ -1,7 +1,7 @@
 // axios is a library that serves to create HTTP requests that are present externally
 import axios from 'axios';
 
-const API = axios.create({ baseRUL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://flyrproject.herokuapp.com/' });
 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
